@@ -1,13 +1,15 @@
 package dev.pulsarfunction.energy;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.StringJoiner;
 
 /**
  */
-public class Device  {
+public class Device  implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    public String measurement;
+        public String measurement;
     public long timestamp;
     public Map<String, String> tags;
     public Map<String, Object> fields;

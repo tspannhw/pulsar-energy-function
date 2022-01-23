@@ -1,0 +1,4 @@
+  --output-serde-classname dev.pulsarfunction.energy.DeviceSerde
+
+
+https://pulsar.apache.org/docs/en/functions-api/#java-serde

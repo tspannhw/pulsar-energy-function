@@ -1,14 +1,18 @@
 package dev.pulsarfunction.energy;
 
 import dev.pulsarfunction.energy.EnergyFunction;
+import org.apache.pulsar.common.functions.ConsumerConfig;
 import org.apache.pulsar.common.functions.FunctionConfig;
 import org.apache.pulsar.common.io.SourceConfig;
+import org.apache.pulsar.common.schema.SchemaType;
 import org.apache.pulsar.functions.LocalRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.apache.pulsar.functions.api.Context;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.mockito.Mockito.mock;
 
@@ -36,8 +40,8 @@ public class EnergyFunctionTest {
     @Test
     public void testEnergyFunction() {
         EnergyFunction func = new EnergyFunction();
-        Device output = func.process(JSON_STRING, mock(Context.class));
-        System.out.println(output.toString());
+       // Device output = func.process(JSON_STRING, mock(Context.class));
+      //  System.out.println(output.toString());
         //Assert.assertEquals(output, "Positive");
     }
 
@@ -46,20 +50,36 @@ public class EnergyFunctionTest {
      * @throws Exception
      */
         public static void main(String[] args) throws Exception {
+            //                    .output("persistent://public/default/energy-influx")
+            /**
+             * bin/pulsar-admin functions create --auto-ack true --jar /opt/demo/energy/energy-1.0.jar
+             * --classname "dev.pulsarfunction.energy.EnergyFunction"
+             * --dead-letter-topic "persistent://public/default/energydead" --inputs "persistent://public/default/energy"
+             * --log-topic "persistent://public/default/energylog" --name Energy --namespace default -
+             * -output "persistent://public/default/energy-influx" --tenant public
+             * --max-message-retries 5
+             *                    .cleanupSubscription(true)
+             */
 
+// https://github.com/david-streamlio/Pulsar-Edge-Analytics/blob/main/edge-analytics-functions/src/main/java/com/manning/pulsar/iiot/analytics/quantiles/OilSensorQuantilesFunction.java
+
+            Map<String, ConsumerConfig> inputSpecs = new HashMap<String, ConsumerConfig>();
+            inputSpecs.put("persistent://public/default/energy",
+                            ConsumerConfig.builder().schemaType(SchemaType.STRING.name()).build());
+                     //           .tenant("public")
+//                    .namespace("default")
+//                    .output("persistent://public/default/energy-influx")
+//                    .outputSchemaType("json")
+//               .inputSpecs(inputSpecs)
             FunctionConfig functionConfig = FunctionConfig.builder()
                     .className(EnergyFunction.class.getName())
                     .inputs(Collections.singleton("persistent://public/default/energy"))
-                    .name("Energy")
-                    .tenant("public")
-                    .namespace("default")
+
+                    .name("Energy5")
                     .runtime(FunctionConfig.Runtime.JAVA)
                     .autoAck(true)
-                    .exposePulsarAdminClientEnabled(true)
-                    .cleanupSubscription(true)
                     .build();
 
-            // nvidia-desktop
             LocalRunner localRunner = LocalRunner.builder()
                     .brokerServiceUrl("pulsar://pulsar1:6650")
                     .functionConfig(functionConfig)
