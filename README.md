@@ -2,9 +2,21 @@
 
 ## Developer Workspace
 
-* Using JDK 8.
-* Using Python 3.7.
+* Using JDK 8. 1.8.0_292.  OPEN JDK 64-bit Server
+* Using Python 3.7.12
 * Using Mac OS Monterey 12.0.1
+* Using IntelliJ IDEA CE 2021.2
+
+## Developer Deployment Server
+
+* Ubuntu Ubuntu 18.04.6 LTS
+* JDK 1.8.0_312
+* Python 3.6.9
+* 70G RAM
+* 24 Virtual Cores
+* HP ProLiant DL360 G7 1U RackMount 64-bit Server with 2×Six-Core X5677 Xeon 3.46GHz CPUs 
+*    72GB PC3-10600R RAM 
+*    4×900GB 10K SAS SFF HDD, P410i RAID, 4×GigaBit NIC
 
 ## setup
 
@@ -31,3 +43,4 @@ bin/pulsar-client consume "persistent://public/default/energy-infux" -s "fnchatr
 ## references
 
 * https://github.com/tspannhw/flip-java-energy
+
