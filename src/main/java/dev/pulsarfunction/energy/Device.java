@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 /**
+ * Device
  */
-public class Device  implements Serializable {
+public class Device implements Serializable {
     private static final long serialVersionUID = 1L;
-
-        public String measurement;
+    public String measurement;
     public long timestamp;
     public Map<String, String> tags;
     public Map<String, Object> fields;
@@ -54,7 +54,6 @@ public class Device  implements Serializable {
     }
 
     /**
-     *
      * @param measurement
      * @param timestamp
      * @param tags

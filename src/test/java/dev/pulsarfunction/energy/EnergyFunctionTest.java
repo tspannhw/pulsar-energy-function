@@ -16,6 +16,9 @@ import java.util.Map;
 
 import static org.mockito.Mockito.mock;
 
+/**
+ *
+ */
 public class EnergyFunctionTest {
 
     protected Context ctx;
