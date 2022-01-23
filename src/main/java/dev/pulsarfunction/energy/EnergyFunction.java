@@ -17,7 +17,7 @@ public class EnergyFunction implements Function<byte[], Void> {
             return null;
         }
         if ( context.getLogger() != null) {
-            context.getLogger().info("LOG:" + input.toString());
+            context.getLogger().debug("LOG:" + input.toString());
 
             System.setProperty("org.slf4j.simpleLogger.logFile", "System.out");
 
@@ -30,6 +30,7 @@ public class EnergyFunction implements Function<byte[], Void> {
 
             /* This will return Long.MAX_VALUE if there is no preset limit */
             long maxMemory = Runtime.getRuntime().maxMemory();
+
             /* Maximum amount of memory the JVM will attempt to use */
             context.getLogger().debug("Maximum memory (bytes): " +
                     (maxMemory == Long.MAX_VALUE ? "no limit" : maxMemory));
@@ -38,32 +39,20 @@ public class EnergyFunction implements Function<byte[], Void> {
             context.getLogger().debug("Total memory available to JVM (bytes): " +
                     Runtime.getRuntime().totalMemory());
 
-            context.recordMetric("energy-count", 1);
-
-//            ByteBuffer value = null;
-//            context.putState("energy", value);
+//            context.recordMetric("energy-count", 1);
         }
 
-//        String inputTopic = "persistent://public/default/energy";
         String outputTopic  = "persistent://public/default/energy-influx";
-    //    String OS = System.getProperty("os.name").toLowerCase();
         DeviceSerde serde = new DeviceSerde();
         Device device = new Device();
-        String jsonString = "";
 
         try {
             device = serde.deserialize(input);
-
- //           context.newConsumerBuilder(JSONSchema.of(Device.class))
 
             if ( device != null ) {
                 if ( context.getLogger() != null ) {
                     context.getLogger().debug("Receive message JSON:" + device);
                 }
-//                jsonString = serde.serializeToJSON(device);
-//                System.out.println(jsonString);
-
-                System.out.println("Device:" + device.toString());
 
                 context.newOutputMessage(outputTopic, JSONSchema.of(Device.class))
                         .key(UUID.randomUUID().toString())
@@ -71,7 +60,6 @@ public class EnergyFunction implements Function<byte[], Void> {
                         .send();
             }
         } catch (Throwable e) {
-            e.printStackTrace();
             if ( context.getLogger() != null) {
                 context.getLogger().error("ERROR:" + e.getLocalizedMessage());
             }

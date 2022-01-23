@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.Locale;
 
 /**
- *
+ * Device Serde
  */
 public class DeviceSerde implements SerDe<Device> {
 
@@ -42,7 +42,7 @@ public class DeviceSerde implements SerDe<Device> {
     /**
      *
      * @param input   device as a raw string in bytes
-     * @return Device
+     * @return Device object
      */
     public Device deserialize(byte[] input) {
         if ( input == null) {

@@ -40,9 +40,7 @@ public class EnergyFunctionTest {
     @Test
     public void testEnergyFunction() {
         EnergyFunction func = new EnergyFunction();
-       // Device output = func.process(JSON_STRING, mock(Context.class));
-      //  System.out.println(output.toString());
-        //Assert.assertEquals(output, "Positive");
+        func.process(JSON_STRING.getBytes(), mock(Context.class));
     }
 
     /**
@@ -50,31 +48,9 @@ public class EnergyFunctionTest {
      * @throws Exception
      */
         public static void main(String[] args) throws Exception {
-            //                    .output("persistent://public/default/energy-influx")
-            /**
-             * bin/pulsar-admin functions create --auto-ack true --jar /opt/demo/energy/energy-1.0.jar
-             * --classname "dev.pulsarfunction.energy.EnergyFunction"
-             * --dead-letter-topic "persistent://public/default/energydead" --inputs "persistent://public/default/energy"
-             * --log-topic "persistent://public/default/energylog" --name Energy --namespace default -
-             * -output "persistent://public/default/energy-influx" --tenant public
-             * --max-message-retries 5
-             *                    .cleanupSubscription(true)
-             */
-
-// https://github.com/david-streamlio/Pulsar-Edge-Analytics/blob/main/edge-analytics-functions/src/main/java/com/manning/pulsar/iiot/analytics/quantiles/OilSensorQuantilesFunction.java
-
-            Map<String, ConsumerConfig> inputSpecs = new HashMap<String, ConsumerConfig>();
-            inputSpecs.put("persistent://public/default/energy",
-                            ConsumerConfig.builder().schemaType(SchemaType.STRING.name()).build());
-                     //           .tenant("public")
-//                    .namespace("default")
-//                    .output("persistent://public/default/energy-influx")
-//                    .outputSchemaType("json")
-//               .inputSpecs(inputSpecs)
             FunctionConfig functionConfig = FunctionConfig.builder()
                     .className(EnergyFunction.class.getName())
                     .inputs(Collections.singleton("persistent://public/default/energy"))
-
                     .name("Energy5")
                     .runtime(FunctionConfig.Runtime.JAVA)
                     .autoAck(true)
