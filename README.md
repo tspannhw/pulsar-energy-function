@@ -144,5 +144,24 @@ bin/pulsar-admin sinks status --tenant public --namespace default --name influxd
 java -jar /opt/demo/energy/EnergyProducer-1.0-jar-with-dependencies.jar --serviceUrl pulsar://pulsar1:6650 --topic 'persistent://public/default/energy-influx'
 ````
 
+## Telegraf MQTT
+
+````
+# Read metrics from MQTT topic(s)
+[[inputs.mqtt_consumer]]
+  ## Broker URLs for the MQTT server or cluster.  To connect to multiple
+  ## clusters or standalone servers, use a separate plugin instance.
+  ##   example: servers = ["tcp://localhost:1883"]
+  ##            servers = ["ssl://localhost:1883"]
+  ##            servers = ["ws://localhost:1883"]
+  servers = ["tcp://192.168.1.230:1883"]
+
+  ## Topics that will be subscribed to.
+  topics = [
+    "telegrafcpu",
+    "telegrafmem",
+    "sensors",
+  ]
+````
 
 
